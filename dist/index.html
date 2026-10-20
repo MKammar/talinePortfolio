@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Taline Chehoury — Marketing & Communication Portfolio</title>
+  <meta name="description" content="Selected fashion, luxury, editorial and communication projects by Taline Chehoury in Paris.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23090909'/%3E%3Cpath d='M11 15h42v9H37v27H27V24H11z' fill='%239d0b28'/%3E%3C/svg%3E">
+  <style>
+    :root{--ink:#080808;--paper:#fff;--red:#9d0b28;--soft:#f1f1ef;--muted:#676767;--line:#d8d8d5}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    .wrap{width:min(1240px,calc(100% - 48px));margin:auto}
+    header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+    .nav{height:68px;display:flex;align-items:center;justify-content:space-between;gap:28px}
+    .logo{font-family:Arial Black,Arial,Helvetica,sans-serif;font-size:1.28rem;font-style:normal;font-weight:900;letter-spacing:-.045em;color:var(--ink)}
+    .logo b{color:inherit;font-weight:900}
+    nav{display:flex;gap:26px;font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+    .button{display:inline-flex;min-height:44px;align-items:center;justify-content:center;padding:0 17px;border:1px solid var(--ink);font-size:.78rem;font-weight:850;letter-spacing:.07em;text-transform:uppercase;transition:.2s}
+    .button:hover{background:var(--ink);color:#fff}
+    .button.red{background:var(--red);border-color:var(--red);color:#fff}
+    .hero{display:grid;grid-template-columns:1.02fr .98fr;min-height:760px;align-items:center;gap:68px;padding:80px 0 60px}
+    .eyebrow{font-size:.74rem;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+    h1{font-family:Arial Black,Arial,Helvetica,sans-serif;font-size:clamp(4rem,8.5vw,8.2rem);font-weight:900;font-style:normal;line-height:.82;letter-spacing:-.075em;margin:25px 0 34px;max-width:8ch;color:var(--ink)}
+    .intro{font-size:clamp(1.08rem,1.7vw,1.4rem);max-width:620px;margin:0 0 34px}
+    .actions{display:flex;gap:12px;flex-wrap:wrap}
+    .hero-collage{height:610px;position:relative}
+    .hero-collage figure{position:absolute;margin:0;border:1px solid var(--ink);background:#fff;overflow:hidden;box-shadow:10px 10px 0 var(--red)}
+    .hero-collage img{width:100%;height:100%;object-fit:contain;background:#fff}
+    .hero-collage .a{width:84%;height:auto;aspect-ratio:1196/738;right:0;top:24px;transform:rotate(1.4deg)}
+    .hero-collage .b{width:72%;height:auto;aspect-ratio:2048/982;left:0;bottom:64px;transform:rotate(-2deg)}
+    .hero-collage .c{width:52%;height:auto;aspect-ratio:1554/816;right:12px;bottom:10px;transform:rotate(2deg)}
+    .marquee{overflow:hidden;background:var(--red);color:#fff;border-block:1px solid var(--ink);padding:11px 0;white-space:nowrap;font-weight:900;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase}
+    .marquee span{display:inline-block;animation:move 24s linear infinite}
+    @keyframes move{to{transform:translateX(-50%)}}
+    section{padding:105px 0;border-bottom:1px solid var(--line)}
+    .section-head{display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:40px;margin-bottom:58px}
+    h2{font-family:Georgia,'Times New Roman',serif;font-size:clamp(3.2rem,7vw,6.7rem);font-weight:400;font-style:italic;line-height:.86;letter-spacing:-.065em;margin:0}
+    .section-head p{max-width:520px;color:var(--muted);margin:0 0 5px}
+    .project{padding:76px 0;border-top:2px solid var(--ink)}
+    .project:first-of-type{padding-top:58px}
+    .project-intro{display:grid;grid-template-columns:.72fr 1.28fr;gap:60px;margin-bottom:42px}
+    .project-number{font-size:.76rem;letter-spacing:.15em;text-transform:uppercase;font-weight:900;color:var(--red)}
+    h3{font-family:Georgia,'Times New Roman',serif;font-size:clamp(2.7rem,5.3vw,5.4rem);font-weight:400;line-height:.88;letter-spacing:-.055em;margin:13px 0 19px}
+    .project-subtitle{font-size:1.08rem;color:var(--red);font-weight:800;margin:0}
+    .project-copy>p{font-size:1.08rem;max-width:690px;margin:0 0 26px}
+    .facts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+    .fact{padding:18px 18px 0 0}
+    .fact b{display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px}
+    .fact span{display:block;color:var(--muted);font-size:.92rem}
+    .gallery{display:grid;grid-template-columns:1.65fr .9fr .9fr;gap:12px;background:var(--ink);padding:12px}
+    .gallery.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .gallery figure{margin:0;background:#fff;min-height:410px;overflow:hidden;position:relative}
+    .gallery img{width:100%;height:100%;object-fit:cover}
+    .gallery .contain img{object-fit:contain}
+    .project.dark{background:var(--ink);color:#fff;margin-inline:calc((100vw - min(1240px,calc(100vw - 48px)))/-2);padding-inline:calc((100vw - min(1240px,calc(100vw - 48px)))/2)}
+    .project.dark .project-copy>p,.project.dark .fact span{color:#c9c9c9}.project.dark .facts{border-color:#444}.project.dark .gallery{background:#fff}
+    .role-note{margin-top:20px;padding:15px 18px;border-left:4px solid var(--red);background:var(--soft);font-size:.95rem;color:var(--ink)}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px}
+    .about-grid>div>p{font-size:1.15rem;max-width:570px}
+    .skills{display:grid;grid-template-columns:1fr 1fr;border-top:2px solid var(--ink)}
+    .skills div{padding:15px 0;border-bottom:1px solid var(--line);font-weight:750}
+    .note{margin-top:40px;color:var(--muted);font-size:.8rem;max-width:820px}
+    footer{background:var(--red);color:#fff;padding:84px 0}
+    .footer-grid{display:grid;grid-template-columns:1.4fr .6fr;gap:40px;align-items:end}
+    footer h2{max-width:820px}
+    .contact-links{display:grid;gap:14px;justify-items:start}
+    .contact-links a{border-bottom:2px solid #fff;font-weight:850}
+    @media(max-width:900px){nav{display:none}.hero,.section-head,.project-intro,.about-grid,.footer-grid{grid-template-columns:1fr}.hero{padding-top:60px;gap:30px}.hero-collage{height:500px}.project-intro{gap:28px}.gallery{grid-template-columns:1fr 1fr}.gallery figure:first-child{grid-column:1/-1}.gallery.two figure:first-child{grid-column:auto}.gallery figure{min-height:330px}.project.dark{margin-inline:calc((100vw - min(1240px,calc(100vw - 48px)))/-2);padding-inline:calc((100vw - min(1240px,calc(100vw - 48px)))/2)}}
+    @media(max-width:560px){.wrap{width:calc(100% - 24px)}header .button{display:none}h1{font-size:4.4rem}.hero{min-height:auto}.hero-collage{height:410px}.hero-collage .a{width:88%;top:10px}.hero-collage .b{width:76%;bottom:52px}.hero-collage .c{width:58%;right:4px;bottom:6px}.actions{display:grid}.button{width:100%}section{padding:78px 0}.facts,.skills{grid-template-columns:1fr}.fact{padding-bottom:15px}.gallery,.gallery.two{grid-template-columns:1fr}.gallery figure:first-child{grid-column:auto}.gallery figure{min-height:245px}.project.dark{margin-inline:-12px;padding-inline:12px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.marquee span{animation:none}}
+  </style>
+  <link rel="stylesheet" href="assets/editorial.css">
+</head>
+<body>
+  <header><div class="wrap nav"><a class="logo" href="#top">Taline <b>Chehoury</b></a><nav><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a></nav><a class="button" href="Taline-Chehoury-Content-Portfolio.pdf" download>Download PDF</a></div></header>
+
+  <main id="top">
+    <div class="wrap hero">
+      <div><div class="eyebrow">Marketing · Communication · Creative Strategy</div><h1><span>Taline</span><span>Chehoury</span></h1><p class="intro">I develop fashion and luxury concepts through strategy, storytelling, art direction and editorial content.</p><div class="actions"><a class="button red" href="#work">Explore selected work</a><a class="button" href="mailto:talinechehoury@hotmail.com">Get in touch</a></div></div>
+      <div class="hero-collage" aria-label="Selected editorial portfolio imagery"><figure class="a"><img src="assets/projects/hero-editorial-01.webp" alt="Beaded jewelry arranged on silver cutlery"></figure><figure class="b"><img src="assets/projects/hero-editorial-02.webp" alt="Black-and-white hands beside an abstract floral image"></figure><figure class="c"><img src="assets/projects/hero-editorial-03.webp" alt="White orchid and close-up coffee texture"></figure></div>
+    </div>
+    <div class="marquee" aria-hidden="true"><span>Brand strategy &nbsp; Art direction &nbsp; Editorial content &nbsp; Social media &nbsp; Integrated campaigns &nbsp; Luxury communication &nbsp; Brand strategy &nbsp; Art direction &nbsp; Editorial content &nbsp; Social media &nbsp; Integrated campaigns &nbsp; Luxury communication &nbsp;</span></div>
+
+    <section id="work"><div class="wrap">
+      <div class="section-head"><h2>Selected work</h2><p>Seven academic and collaborative projects spanning fragrance, beauty, fashion, jewelry, hospitality and editorial publishing. Each case study is clearly identified and focused on the thinking behind the visuals.</p></div>
+
+      <article class="project"><div class="project-intro"><div><div class="project-number">01 · Academic concept</div><h3>L’Après</h3><p class="project-subtitle">Jacquemus fragrance campaign</p></div><div class="project-copy"><p>A fragrance concept built around what remains after someone leaves: warmth in a room, a familiar trace and the quiet persistence of memory. The campaign translates an intimate emotional territory into product, image, film, print and retail touchpoints.</p><div class="facts"><div class="fact"><b>My role</b><span>Strategy, storytelling, copywriting and art direction</span></div><div class="fact"><b>Deliverables</b><span>Fragrance concept, visual language and integrated campaign</span></div><div class="fact"><b>Skills shown</b><span>Emotional branding, creative direction and channel planning</span></div></div></div></div><div class="gallery"><figure class="contain"><img src="assets/projects/jacquemus-editorial-01.webp" alt="Jacquemus coffee campaign visual"></figure><figure class="contain"><img loading="lazy" src="assets/projects/jacquemus-editorial-02.webp" alt="Jacquemus leather campaign visual"></figure><figure class="contain"><img loading="lazy" src="assets/projects/jacquemus-editorial-03.webp" alt="L’Après fragrance bottle concept"></figure></div></article>
+
+      <article class="project dark"><div class="project-intro"><div><div class="project-number">02 · Academic 360° campaign</div><h3>Versace: The Attitude</h3><p class="project-subtitle">Brand platform and cultural campaign</p></div><div class="project-copy"><p>A complete communication campaign designed to reconnect Versace with unapologetic self-expression. Research and positioning lead into a creative platform, manifesto, cast, influencer strategy, exhibition, content plan, budget and performance framework.</p><div class="facts"><div class="fact"><b>My role</b><span>Research, strategy, concept development and art direction</span></div><div class="fact"><b>Deliverables</b><span>360° channel plan, influence, exhibition, budget and KPIs</span></div><div class="fact"><b>Skills shown</b><span>Integrated communication, audience strategy and campaign planning</span></div></div></div></div><div class="gallery"><figure><img loading="lazy" src="assets/projects/versace-cover.jpg" alt="Versace The Attitude campaign cover"></figure><figure class="contain"><img loading="lazy" src="assets/projects/versace-editorial.jpg" alt="Editorial fashion visual from the Versace campaign"></figure><figure class="contain"><img loading="lazy" src="assets/projects/versace-exhibition.jpg" alt="Versace exhibition concept"></figure></div></article>
+
+      <article class="project"><div class="project-intro"><div><div class="project-number">03 · Academic communication strategy</div><h3>For Them</h3><p class="project-subtitle">Bottega Veneta luxury pet accessories</p></div><div class="project-copy"><p>A communication strategy for an imagined Bottega Veneta pet-accessories extension. The proposal protects the house’s quiet-luxury codes while introducing a warm, emotionally relevant category through editorial storytelling, product placement, digital content and retail experience.</p><div class="facts"><div class="fact"><b>My role</b><span>Communication strategy, messaging and campaign planning</span></div><div class="fact"><b>Deliverables</b><span>Targets, key messages, content actions and launch calendar</span></div><div class="fact"><b>Skills shown</b><span>Luxury positioning, content ecosystems and activation planning</span></div></div></div></div><div class="gallery two"><figure class="contain"><img loading="lazy" src="assets/projects/bottega-visual.jpg" alt="Bottega Veneta pet campaign visual"></figure><figure class="contain"><img loading="lazy" src="assets/projects/bottega-product.jpg" alt="Bottega Veneta pet accessories product visual"></figure></div></article>
+
+      <article class="project dark"><div class="project-intro"><div><div class="project-number">04 · Academic beauty concept</div><h3>The Inner Spectrum</h3><p class="project-subtitle">Chanel Beauty immersive experience</p></div><div class="project-copy"><p>A beauty concept exploring how emotion can become color. Inspired by neuroscience and sensory perception, the project imagines a personalized lip experience that translates individual emotional responses into a unique shade and an immersive luxury journey.</p><div class="facts"><div class="fact"><b>My role</b><span>Concept development, research, storytelling and art direction</span></div><div class="fact"><b>Deliverables</b><span>Product concept, visual identity, location and customer experience</span></div><div class="fact"><b>Skills shown</b><span>Beauty innovation, experiential design and emotional branding</span></div></div></div></div><div class="gallery two"><figure class="contain"><img loading="lazy" src="assets/projects/chanel-product.jpg" alt="Chanel Beauty personalized lip product concept"></figure><figure class="contain"><img loading="lazy" src="assets/projects/chanel-cover.jpg" alt="Chanel Beauty The Inner Spectrum project cover"></figure></div></article>
+
+      <article class="project"><div class="project-intro"><div><div class="project-number">05 · Academic brand platform</div><h3>Nadine Ghosn</h3><p class="project-subtitle">A playful activation system</p></div><div class="project-copy"><p>A refreshed brand approach that turns Nadine Ghosn’s playful design language into a coherent communication system. The strategy connects fine jewelry with food, conversation and culture through social content, influencer seeding, editorial imagery and an experiential dinner.</p><div class="facts"><div class="fact"><b>My role</b><span>Brand strategy, creative concepts and visual direction</span></div><div class="fact"><b>Deliverables</b><span>Brand platform, content series, seeding and cultural activations</span></div><div class="fact"><b>Skills shown</b><span>Social thinking, influencer activation and editorial storytelling</span></div></div></div></div><div class="gallery"><figure><img loading="lazy" src="assets/projects/nadine-cover.jpg" alt="Nadine Ghosn brand project cover"></figure><figure class="contain"><img loading="lazy" src="assets/projects/nadine-moodboard.jpg" alt="Nadine Ghosn visual narrative moodboard"></figure><figure><img loading="lazy" src="assets/projects/nadine-editorial.jpg" alt="Nadine Ghosn editorial concept"></figure></div></article>
+
+      <article class="project dark"><div class="project-intro"><div><div class="project-number">06 · Editorial research project</div><h3>Fashion & Gastronomy</h3><p class="project-subtitle">Hospitality, collaborations and food trends</p></div><div class="project-copy"><p>An editorial publication examining how fashion brands use cafés, restaurants, food collaborations and viral culinary trends to build culture and community. The project moves from brand hospitality to collaboration case studies and emerging food phenomena.</p><div class="facts"><div class="fact"><b>My role</b><span>Research, trend analysis, editorial writing and visual direction</span></div><div class="fact"><b>Deliverables</b><span>Magazine concept, feature articles and visual trend stories</span></div><div class="fact"><b>Skills shown</b><span>Cultural intelligence, editorial design and cross-industry analysis</span></div></div></div></div><div class="gallery"><figure class="contain"><img loading="lazy" src="assets/projects/gastronomy-cover.jpg" alt="Fashion and Gastronomy publication cover"></figure><figure class="contain"><img loading="lazy" src="assets/projects/gastronomy-hospitality.jpg" alt="Fashion brands and hospitality editorial page"></figure><figure class="contain"><img loading="lazy" src="assets/projects/gastronomy-matcha.jpg" alt="Matcha food trend editorial page"></figure></div></article>
+
+      <article class="project"><div class="project-intro"><div><div class="project-number">07 · Collaborative editorial project</div><h3>Étude</h3><p class="project-subtitle">Fashion magazine · Denim issue</p></div><div class="project-copy"><p>A fashion magazine dedicated to wardrobe essentials, with denim as the issue’s central subject. Articles, styling and original imagery explore denim as a cultural object shaped by rebellion, utility, imperfection and personal identity.</p><div class="facts"><div class="fact"><b>My contribution</b><span>Editorial writing, art direction, photography and research</span></div><div class="fact"><b>Format</b><span>Print-oriented magazine with reported and visual features</span></div><div class="fact"><b>Skills shown</b><span>Editorial judgment, visual storytelling and cultural research</span></div></div><div class="role-note"><b>Collaboration note:</b> Étude was created as a group project. The responsibilities listed here refer specifically to my contribution.</div></div></div><div class="gallery"><figure class="contain"><img loading="lazy" src="assets/projects/etude-cover.jpg" alt="Étude magazine denim issue cover"></figure><figure class="contain"><img loading="lazy" src="assets/projects/etude-writing.jpg" alt="Étude editorial article spread"></figure><figure class="contain"><img loading="lazy" src="assets/projects/etude-editorial-alternative.jpg" alt="Étude denim editorial photography spread"></figure></div></article>
+    </div></section>
+
+    <section id="about"><div class="wrap"><div class="section-head"><h2>About</h2><p>Paris-based, internationally minded and comfortable moving from research to concept, then from concept to execution.</p></div><div class="about-grid"><div><p>I am a Master’s student in Digital Marketing & Communication at ISCOM Paris and a Fashion Business, Marketing & Communication graduate from LISAA Mode Paris.</p><p>My approach combines cultural research, strategic thinking and a strong visual eye. I work in French and English, with Arabic as my mother tongue.</p></div><div class="skills"><div>Brand strategy</div><div>Communication planning</div><div>Art direction</div><div>Editorial writing</div><div>Social content</div><div>Influencer concepts</div><div>Campaign development</div><div>Trend research</div><div>Photography</div><div>Presentation design</div></div></div><p class="note">Portfolio note: the brand projects shown above are academic concepts and were not commissioned by Jacquemus, Versace, Bottega Veneta, Chanel or Nadine Ghosn. Brand names and imagery are used for educational presentation only.</p></div></section>
+  </main>
+
+  <footer id="contact"><div class="wrap footer-grid"><div><div class="eyebrow" style="color:#fff">French · English · Arabic</div><h2>Let’s build something worth remembering.</h2></div><div class="contact-links"><a href="mailto:talinechehoury@hotmail.com">talinechehoury@hotmail.com</a><a href="Taline-Chehoury-Content-Portfolio.pdf" download>Download portfolio PDF</a></div></div></footer>
+</body>
+</html>
