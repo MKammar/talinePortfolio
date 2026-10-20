@@ -80,13 +80,26 @@
       const heading = heroNode.querySelector("h1");
       const intro = heroNode.querySelector(".intro");
       if (eyebrow && hero.eyebrow) eyebrow.textContent = hero.eyebrow;
-      if (heading && hero.title) heading.textContent = hero.title;
+      if (heading && hero.title) {
+        let title = hero.title.trim();
+        if (
+          !/\s/.test(title)
+          && identity.brand
+          && title.toLocaleLowerCase() === identity.brand.replace(/\s+/g, "").toLocaleLowerCase()
+        ) {
+          title = identity.brand;
+        }
+        const words = title.split(/\s+/);
+        heading.replaceChildren();
+        const firstLine = create("span", "", words.shift() || "");
+        heading.append(firstLine);
+        if (words.length) heading.append(create("span", "", words.join(" ")));
+      }
       if (intro && hero.intro) intro.textContent = hero.intro;
-      if (Array.isArray(hero.images)) {
+      if (Array.isArray(hero.images) && hero.images.length) {
         heroNode.querySelectorAll(".hero-collage img").forEach((image, index) => {
-          const source = hero.images[index] || "";
-          image.closest("figure").hidden = !source;
-          image.src = source;
+          const source = hero.images[index];
+          if (source) image.src = source;
         });
       }
     }
@@ -167,6 +180,16 @@
   }
 
   async function loadPublishedContent() {
+    try {
+      const response = await fetch("/portfolio-content.json", { cache: "no-store" });
+      if (response.ok) {
+        applyContent(await response.json());
+        return;
+      }
+    } catch (error) {
+      console.warn("The GitHub-published portfolio file is not available; checking Supabase content.", error);
+    }
+
     const { data, error } = await client
       .from("portfolio_site")
       .select("content")

@@ -5,6 +5,12 @@
     : null;
 
   const $ = (selector, parent = document) => parent.querySelector(selector);
+  const staticImages = window.PORTFOLIO_IMAGES || [];
+  const portfolioUrl = (source) => {
+    if (!source || /^(?:[a-z]+:|\/\/)/i.test(source)) return source || "";
+    if (source.startsWith("/")) return new URL(source, window.location.origin).href;
+    return new URL(`../${source}`, window.location.href).href;
+  };
   const make = (tag, className, text) => {
     const element = document.createElement(tag);
     if (className) element.className = className;
@@ -28,7 +34,7 @@
 
   function announce(message, isError = false) {
     const notice = $("#notice");
-    notice.textContent = message;
+    notice.replaceChildren(document.createTextNode(message));
     notice.classList.toggle("error", isError);
     notice.hidden = false;
     window.clearTimeout(noticeTimer);
@@ -115,7 +121,9 @@
       },
       hero: {
         eyebrow: hero?.querySelector(".eyebrow")?.textContent.trim() || "",
-        title: hero?.querySelector("h1")?.textContent.trim() || "",
+        title: Array.from(hero?.querySelectorAll("h1 span") || [], (line) => line.textContent.trim()).join(" ")
+          || hero?.querySelector("h1")?.textContent.trim()
+          || "",
         intro: hero?.querySelector(".intro")?.textContent.trim() || "",
         images: Array.from(hero?.querySelectorAll(".hero-collage img") || [], (image) => image.getAttribute("src") || "")
       },
@@ -232,7 +240,7 @@
     content.projects.slice(0, 4).forEach((project) => {
       const item = make("div", "project-mini");
       const image = make("img");
-      image.src = project.images?.[0]?.src || "";
+      image.src = portfolioUrl(project.images?.[0]?.src);
       image.alt = "";
       const copy = make("div");
       copy.append(make("strong", "", project.title), make("span", "", project.subtitle));
@@ -336,7 +344,7 @@
       const handle = make("span", "drag-handle", "⠿");
       handle.setAttribute("aria-label", "Drag to reorder");
       const image = make("img");
-      image.src = project.images?.[0]?.src || "";
+      image.src = portfolioUrl(project.images?.[0]?.src);
       image.alt = "";
       const copy = make("div", "project-row-main");
       copy.append(make("strong", "", project.title || "Untitled project"), make("span", "", project.subtitle || project.category));
@@ -517,8 +525,12 @@
     toolbar.append(copy, uploadLabel);
 
     const media = new Map();
+    staticImages.forEach((path) => {
+      const name = path.split("/").pop().replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ");
+      media.set(portfolioUrl(path), name);
+    });
     content.projects.forEach((project) => (project.images || []).forEach((image) => {
-      if (image.src) media.set(image.src, image.alt || project.title || "Portfolio image");
+      if (image.src) media.set(portfolioUrl(image.src), image.alt || project.title || "Portfolio image");
     }));
     try {
       const { data: stored, error } = await client.storage.from("portfolio-media").list(user.id, {
@@ -541,13 +553,15 @@
       const image = make("img");
       image.src = url;
       image.alt = alt;
+      image.loading = "lazy";
+      image.addEventListener("error", () => { image.hidden = true; });
       const caption = make("span", "", alt);
       const copyUrl = make("button", "media-copy", "Copy image URL");
       copyUrl.type = "button";
       copyUrl.addEventListener("click", async () => {
         try {
           await navigator.clipboard.writeText(url);
-          announce("Image URL copied. Paste it into a project image field.");
+          announce("Image URL copied. Add an image row in a project, then paste the URL.");
         } catch (error) {
           announce(`Could not copy the image URL: ${error.message || "Clipboard access is unavailable."}`, true);
         }
@@ -574,13 +588,14 @@
       row.append(detail, make("span", "status-pill", "Connected"));
       card.append(row);
     });
-    const help = sectionCard("First-time setup", "If this is your first deployment, complete these steps in Supabase.");
+    const help = sectionCard("First-time setup", "Publishing requires one secure GitHub Edge Function setup.");
     const steps = make("ol", "setup-steps");
     [
       "Run supabase/schema.sql in the Supabase SQL Editor.",
       "Create your admin login under Authentication → Users.",
       "Add that user's UUID to public.portfolio_admins (the setup steps are in README.md).",
-      "Sign in here, edit your portfolio, then select Publish changes."
+      "Deploy supabase/functions/publish-portfolio with the Supabase CLI and add the GitHub token, repository, production branch, and site URL to Supabase Edge Function secrets.",
+      "Sign in here, edit your portfolio, then select Publish changes to create a GitHub commit and trigger Vercel."
     ].forEach((step) => steps.append(make("li", "", step)));
     help.append(steps);
     root.append(card, help);
@@ -636,14 +651,26 @@
     try {
       window.clearTimeout(draftTimer);
       await queueDraftSave();
-      const snapshot = JSON.parse(JSON.stringify(content));
-      const { error } = await client.from("portfolio_site").upsert({
-        id: true,
-        content: snapshot,
-        published_at: new Date().toISOString()
-      }, { onConflict: "id" });
-      if (error) throw error;
-      announce("Published! Your portfolio is now updated for visitors.");
+      const { data, error } = await client.functions.invoke("publish-portfolio", {
+        body: { content: JSON.parse(JSON.stringify(content)) }
+      });
+      if (error) {
+        let detail = error.message;
+        if (error.context instanceof Response) {
+          const responseBody = await error.context.json().catch(() => null);
+          if (responseBody?.error) detail = responseBody.error;
+        }
+        throw new Error(detail || "The secure GitHub publisher returned an error.");
+      }
+      if (data?.error) throw new Error(data.error);
+      announce("Committed to GitHub. Vercel will update your live site when its deployment finishes.");
+      if (data?.commitUrl) {
+        const link = make("a", "", " View commit");
+        link.href = data.commitUrl;
+        link.target = "_blank";
+        link.rel = "noreferrer";
+        $("#notice").append(link);
+      }
     } catch (error) {
       setDirty(true);
       announce(`Could not publish your changes: ${error.message || "Unexpected error."}`, true);
@@ -662,14 +689,43 @@
     const fields = make("div", "field-grid");
     const urlField = field("Image URL", image.src || "", () => {}, { full: true, markDirty: false });
     const altField = field("Image description (alt text)", image.alt || "", () => {}, { markDirty: false });
+    const urlInput = $("input", urlField);
+    const altInput = $("input", altField);
+    urlInput.addEventListener("input", () => {
+      preview.src = portfolioUrl(urlInput.value.trim());
+      preview.hidden = !urlInput.value.trim();
+    });
+    const assetLabel = make("label", "");
+    assetLabel.append(document.createTextNode("Choose an image from your portfolio"));
+    const assetPicker = make("select");
+    const placeholder = make("option", "", "Choose an image…");
+    placeholder.value = "";
+    assetPicker.append(placeholder);
+    staticImages.forEach((path) => {
+      const option = make("option", "", path.split("/").pop());
+      option.value = path;
+      assetPicker.append(option);
+    });
+    assetPicker.addEventListener("change", () => {
+      if (!assetPicker.value) return;
+      urlInput.value = assetPicker.value;
+      if (!altInput.value) altInput.value = assetPicker.value.split("/").pop().replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ");
+      preview.src = portfolioUrl(assetPicker.value);
+      preview.hidden = false;
+    });
+    assetLabel.append(assetPicker);
     const containLabel = make("label", "check-row");
     const contain = make("input");
     contain.type = "checkbox";
     contain.checked = Boolean(image.contain);
     containLabel.append(contain, document.createTextNode("Fit whole image"));
-    fields.append(urlField, altField, containLabel);
+    fields.append(urlField, assetLabel, altField, containLabel);
 
     const actions = make("div", "image-row-actions");
+    const preview = make("img", "image-row-preview");
+    preview.alt = image.alt || "";
+    preview.src = portfolioUrl(image.src);
+    preview.hidden = !image.src;
     const uploadButton = make("button", "", "Upload");
     uploadButton.type = "button";
     const file = make("input");
@@ -681,8 +737,9 @@
         uploadButton.disabled = true;
         uploadButton.textContent = "Uploading…";
         const url = await uploadImage(file.files[0]);
-        $("input:not([type=checkbox])", urlField).value = url;
-        setDirty();
+        urlInput.value = url;
+        preview.src = url;
+        preview.hidden = false;
       } catch (error) {
         announce(error.message || "Image upload failed.", true);
       } finally {
@@ -696,7 +753,7 @@
     remove.type = "button";
     remove.addEventListener("click", () => row.remove());
     actions.append(uploadButton, remove, file);
-    row.append(fields, actions);
+    row.append(preview, fields, actions);
     list.append(row);
   }
 
@@ -726,7 +783,7 @@
     const fields = Array.from($("#project-images").querySelectorAll(".image-row"));
     const images = fields.map((row) => ({
       src: $("input:not([type=checkbox])", row.querySelector(".field-grid label:first-child"))?.value.trim() || "",
-      alt: $("input:not([type=checkbox])", row.querySelector(".field-grid label:nth-child(2)"))?.value.trim() || "",
+      alt: $("input:not([type=checkbox])", row.querySelector(".field-grid label:nth-child(3)"))?.value.trim() || "",
       contain: $("input[type=checkbox]", row)?.checked || false
     })).filter((image) => image.src);
     const project = {
