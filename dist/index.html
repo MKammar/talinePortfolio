@@ -7,10 +7,10 @@
   <meta name="description" content="Selected fashion, luxury, editorial and communication projects by Taline Chehoury in Paris.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23090909'/%3E%3Cpath d='M11 15h42v9H37v27H27V24H11z' fill='%239d0b28'/%3E%3C/svg%3E">
   <style>
-    :root{--ink:#080808;--paper:#fff;--red:#9d0b28;--soft:#f1f1ef;--muted:#676767;--line:#d8d8d5}
+    :root{--ink:#080808;--paper:#fff;--red:#9d0b28;--soft:#f1f1ef;--muted:#676767;--line:#d8d8d5;--body-font:Arial,Helvetica,sans-serif;--heading-font:Georgia,'Times New Roman',serif;--display-font:'Arial Black',Arial,Helvetica,sans-serif}
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body-font);font-size:16px;line-height:1.5}
     a{color:inherit;text-decoration:none}
     img{display:block;max-width:100%}
     .wrap{width:min(1240px,calc(100% - 48px));margin:auto}
@@ -24,7 +24,7 @@
     .button.red{background:var(--red);border-color:var(--red);color:#fff}
     .hero{display:grid;grid-template-columns:1.02fr .98fr;min-height:760px;align-items:center;gap:68px;padding:80px 0 60px}
     .eyebrow{font-size:.74rem;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
-    h1{font-family:Arial Black,Arial,Helvetica,sans-serif;font-size:clamp(4rem,8.5vw,8.2rem);font-weight:900;font-style:normal;line-height:.82;letter-spacing:-.075em;margin:25px 0 34px;max-width:8ch;color:var(--ink)}
+    h1{font-family:var(--display-font);font-size:clamp(4rem,8.5vw,8.2rem);font-weight:900;font-style:normal;line-height:.82;letter-spacing:-.075em;margin:25px 0 34px;max-width:8ch;color:var(--ink)}
     .intro{font-size:clamp(1.08rem,1.7vw,1.4rem);max-width:620px;margin:0 0 34px}
     .actions{display:flex;gap:12px;flex-wrap:wrap}
     .hero-collage{height:610px;position:relative}
@@ -38,13 +38,13 @@
     @keyframes move{to{transform:translateX(-50%)}}
     section{padding:105px 0;border-bottom:1px solid var(--line)}
     .section-head{display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:40px;margin-bottom:58px}
-    h2{font-family:Georgia,'Times New Roman',serif;font-size:clamp(3.2rem,7vw,6.7rem);font-weight:400;font-style:italic;line-height:.86;letter-spacing:-.065em;margin:0}
+    h2{font-family:var(--heading-font);font-size:clamp(3.2rem,7vw,6.7rem);font-weight:400;font-style:italic;line-height:.86;letter-spacing:-.065em;margin:0}
     .section-head p{max-width:520px;color:var(--muted);margin:0 0 5px}
     .project{padding:76px 0;border-top:2px solid var(--ink)}
     .project:first-of-type{padding-top:58px}
     .project-intro{display:grid;grid-template-columns:.72fr 1.28fr;gap:60px;margin-bottom:42px}
     .project-number{font-size:.76rem;letter-spacing:.15em;text-transform:uppercase;font-weight:900;color:var(--red)}
-    h3{font-family:Georgia,'Times New Roman',serif;font-size:clamp(2.7rem,5.3vw,5.4rem);font-weight:400;line-height:.88;letter-spacing:-.055em;margin:13px 0 19px}
+    h3{font-family:var(--heading-font);font-size:clamp(2.7rem,5.3vw,5.4rem);font-weight:400;line-height:.88;letter-spacing:-.055em;margin:13px 0 19px}
     .project-subtitle{font-size:1.08rem;color:var(--red);font-weight:800;margin:0}
     .project-copy>p{font-size:1.08rem;max-width:690px;margin:0 0 26px}
     .facts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
@@ -107,5 +107,8 @@
   </main>
 
   <footer id="contact"><div class="wrap footer-grid"><div><div class="eyebrow" style="color:#fff">French · English · Arabic</div><h2>Let’s build something worth remembering.</h2></div><div class="contact-links"><a href="mailto:talinechehoury@hotmail.com">talinechehoury@hotmail.com</a><a href="Taline-Chehoury-Content-Portfolio.pdf" download>Download portfolio PDF</a></div></div></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/supabase-config.js"></script>
+  <script defer src="assets/portfolio-cms.js"></script>
 </body>
 </html>

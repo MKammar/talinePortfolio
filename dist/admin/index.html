@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Portfolio Studio — Taline Chehoury</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <main id="login-screen" class="login-screen">
+    <form id="login-form" class="login-card">
+      <a class="wordmark" href="/">TC<span>.</span></a>
+      <p class="eyebrow">TALINE CHEHOURY · PORTFOLIO STUDIO</p>
+      <h1>Welcome back.</h1>
+      <p class="muted">Sign in to update your portfolio. Your admin account is managed securely through Supabase.</p>
+      <label>Email address<input id="login-email" type="email" autocomplete="username" required></label>
+      <label>Password<input id="login-password" type="password" autocomplete="current-password" required></label>
+      <button class="button primary" type="submit">Sign in <span aria-hidden="true">→</span></button>
+      <p id="login-error" class="message error" role="alert" hidden></p>
+      <p class="login-foot">Private admin area · <a href="/">Back to portfolio</a></p>
+    </form>
+  </main>
+
+  <div id="app" class="app-shell" hidden>
+    <aside class="sidebar">
+      <a class="wordmark" href="/">TC<span>.</span></a>
+      <p class="sidebar-label">WORKSPACE</p>
+      <nav id="main-nav" class="main-nav" aria-label="Dashboard">
+        <button class="nav-item active" data-page="overview"><span>◫</span> Overview</button>
+        <button class="nav-item" data-page="content"><span>▤</span> Site content</button>
+        <button class="nav-item" data-page="projects"><span>▧</span> Projects <span id="project-count" class="nav-count"></span></button>
+        <button class="nav-item" data-page="design"><span>◈</span> Design studio</button>
+        <button class="nav-item" data-page="media"><span>▧</span> Image library</button>
+        <button class="nav-item" data-page="settings"><span>⚙</span> Settings</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="site-link" href="/" target="_blank" rel="noreferrer"><span>↗</span> View live portfolio</a>
+        <div class="profile"><div class="avatar">TC</div><div class="profile-copy"><strong id="account-email">Admin</strong><span>Portfolio admin</span></div><button id="logout-button" class="icon-button" title="Sign out" aria-label="Sign out">↪</button></div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div><p class="eyebrow">YOUR CREATIVE SPACE</p><h1 id="page-title">Overview</h1></div>
+        <div class="top-actions"><span id="save-indicator" class="save-indicator"><i></i> All changes saved</span><button id="preview-button" class="button quiet">Preview site <span>↗</span></button><button id="publish-button" class="button primary">Publish changes <span>↑</span></button></div>
+      </header>
+      <div id="notice" class="notice" role="status" hidden></div>
+      <div id="page-content" class="page-content"></div>
+    </main>
+  </div>
+
+  <dialog id="project-dialog" class="project-dialog">
+    <form id="project-form" class="dialog-form">
+      <div class="dialog-head"><div><p class="eyebrow">PROJECT EDITOR</p><h2 id="dialog-title">Add a project</h2></div><button type="button" id="close-dialog" class="icon-button" aria-label="Close">×</button></div>
+      <input id="project-id" type="hidden">
+      <div class="form-grid">
+        <label>Project title<input id="project-title" required maxlength="100"></label>
+        <label>Category<input id="project-category" maxlength="70" placeholder="Academic concept"></label>
+        <label class="full">Subtitle<input id="project-subtitle" maxlength="140"></label>
+        <label class="full">Project description<textarea id="project-description" rows="4" maxlength="1200"></textarea></label>
+        <label>Role / contribution<input id="fact-role" maxlength="180"></label>
+        <label>Deliverables<input id="fact-deliverables" maxlength="180"></label>
+        <label class="full">Skills shown<input id="fact-skills" maxlength="180"></label>
+        <label class="full">Optional collaboration note<textarea id="project-note" rows="2" maxlength="240"></textarea></label>
+      </div>
+      <div class="image-editor-head"><div><h3>Project images</h3><p class="muted">Add image URLs or upload images. Up to six images.</p></div><button type="button" id="add-image" class="button quiet small">＋ Add image</button></div>
+      <div id="project-images" class="project-images"></div>
+      <label class="check-row"><input id="project-dark" type="checkbox"> Use dark project section</label>
+      <div class="dialog-actions"><button type="button" id="cancel-dialog" class="button quiet">Cancel</button><button class="button primary" type="submit">Save project</button></div>
+    </form>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../assets/supabase-config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
