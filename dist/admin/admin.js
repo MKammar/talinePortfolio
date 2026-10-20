@@ -651,18 +651,43 @@
     try {
       window.clearTimeout(draftTimer);
       await queueDraftSave();
-      const { data, error } = await client.functions.invoke("publish-portfolio", {
-        body: { content: JSON.parse(JSON.stringify(content)) }
-      });
-      if (error) {
-        let detail = error.message;
-        if (error.context instanceof Response) {
-          const responseBody = await error.context.json().catch(() => null);
-          if (responseBody?.error) detail = responseBody.error;
-        }
-        throw new Error(detail || "The secure GitHub publisher returned an error.");
+      const { error: livePublishError } = await client.from("portfolio_site").upsert({
+        id: true,
+        content: JSON.parse(JSON.stringify(content)),
+        published_at: new Date().toISOString()
+      }, { onConflict: "id" });
+      if (livePublishError) throw livePublishError;
+
+      let data;
+      let githubError;
+      try {
+        const result = await client.functions.invoke("publish-portfolio", {
+          body: { content: JSON.parse(JSON.stringify(content)) }
+        });
+        data = result.data;
+        githubError = result.error;
+      } catch (error) {
+        githubError = error;
       }
-      if (data?.error) throw new Error(data.error);
+
+      if (githubError) {
+        let detail = githubError.message || "The GitHub publisher could not be reached.";
+        if (githubError.context instanceof Response) {
+          const responseBody = await githubError.context.json().catch(() => null);
+          if (responseBody?.error) detail = responseBody.error;
+          else if (githubError.context.status === 404) detail = "The GitHub publisher function is not deployed in Supabase yet.";
+        }
+        setDirty(false);
+        announce(`Your live site is updated from Supabase, but no GitHub commit was created. ${detail} Deploy the function and add its secrets as described in README.md.`, true);
+        return;
+      }
+      if (data?.error) {
+        setDirty(false);
+        announce(`Your live site is updated from Supabase, but no GitHub commit was created. ${data.error}`, true);
+        return;
+      }
+
+      setDirty(false);
       announce("Committed to GitHub. Vercel will update your live site when its deployment finishes.");
       if (data?.commitUrl) {
         const link = make("a", "", " View commit");
@@ -672,8 +697,7 @@
         $("#notice").append(link);
       }
     } catch (error) {
-      setDirty(true);
-      announce(`Could not publish your changes: ${error.message || "Unexpected error."}`, true);
+      announce(`Could not publish your changes to the live site: ${error.message || "Unexpected error."} Your draft is still saved.`, true);
     } finally {
       setBusy(false);
     }

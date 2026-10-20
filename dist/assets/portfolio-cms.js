@@ -181,25 +181,32 @@
 
   async function loadPublishedContent() {
     try {
+      const { data, error } = await client
+        .from("portfolio_site")
+        .select("content")
+        .eq("id", true)
+        .maybeSingle();
+      if (error) throw error;
+      if (data) {
+        applyContent(data.content);
+        return;
+      }
+    } catch (error) {
+      console.error("Could not load published portfolio content from Supabase; trying the static published copy.", error);
+    }
+
+    try {
       const response = await fetch("/portfolio-content.json", { cache: "no-store" });
       if (response.ok) {
         applyContent(await response.json());
         return;
       }
+      if (response.status !== 404) {
+        console.error(`Could not load the static portfolio content: HTTP ${response.status}.`);
+      }
     } catch (error) {
-      console.warn("The GitHub-published portfolio file is not available; checking Supabase content.", error);
+      console.error("Could not load the static published portfolio content.", error);
     }
-
-    const { data, error } = await client
-      .from("portfolio_site")
-      .select("content")
-      .eq("id", true)
-      .maybeSingle();
-    if (error) {
-      console.error("Could not load the published portfolio content; showing the built-in site instead.", error);
-      return;
-    }
-    if (data) applyContent(data.content);
   }
 
   loadPublishedContent();

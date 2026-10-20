@@ -28,7 +28,7 @@ The admin page has no public sign-up form. Only Supabase accounts explicitly lis
    ```
 
 4. Deploy the repository to Vercel. The browser configuration in [`dist/assets/supabase-config.js`](./dist/assets/supabase-config.js) contains only the Supabase project URL and **publishable** key; those are intended to be public. Never put a Supabase secret key, service-role key, database password, or JWT signing secret in this file or any browser code.
-5. Configure the GitHub publisher below, then sign in at `/admin/`. The studio imports the existing portfolio into a draft the first time. Edit, wait until the save indicator says **All changes saved**, and select **Publish changes**. The button commits `dist/portfolio-content.json` to GitHub; Vercel then deploys it from the production branch.
+5. Sign in at `/admin/`. The studio imports the existing portfolio into a draft the first time. Edit, wait until the save indicator says **All changes saved**, and select **Publish changes**. Changes are published to Supabase immediately so visitors can see them. Once the GitHub publisher is configured, the same action also commits `dist/portfolio-content.json` to GitHub and Vercel deploys it from the production branch. The dashboard reports separately if the live update succeeded but the GitHub commit did not.
 
 ## GitHub publishing setup
 
@@ -52,7 +52,7 @@ Publishing makes a real commit to the Vercel-connected GitHub repository. GitHub
    | `PORTFOLIO_ORIGIN` | `https://taline-chehoury-portfolio.vercel.app` |
 
 4. Confirm that Vercel is connected to the same GitHub repository and automatically deploys commits to that production branch.
-5. Publish from `/admin/`. A successful publish displays a link to the GitHub commit. The public site reads the committed JSON file after Vercel finishes deployment.
+5. Publish from `/admin/`. A successful GitHub publish displays a link to the commit. Supabase makes the content live immediately; the public site uses that published content first and the committed JSON as a fallback.
 
 If you do not know the GitHub repository name or production branch, find them in the Vercel project settings before adding the function secrets. The dashboard deliberately cannot commit directly from browser code because that would expose the GitHub write token.
 
